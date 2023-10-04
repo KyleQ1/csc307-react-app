@@ -40,15 +40,25 @@ const users = {
     ]
  }
  
-const findUserByName = (name) => { 
+const findUser = (name, job) => { 
+    if (job != undefined){
+        return users['users_list']
+        .filter( (user) => user['name'] === name && user['job'] === job); 
+    }
     return users['users_list']
         .filter( (user) => user['name'] === name); 
 }
 
 app.get('/users', (req, res) => {
     const name = req.query.name;
-    if (name != undefined){
-        let result = findUserByName(name);
+    const job = req.query.job;
+    if (name != undefined && job != undefined){
+        let result = findUser(name, job);
+        result = {users_list: result};
+        res.send(result);
+    }
+    else if (name != undefined){
+        let result = findUser(name);
         result = {users_list: result};
         res.send(result);
     }
