@@ -71,6 +71,36 @@ app.get('/users/:id', (req, res) => {
     }
 });
 
+const checkInput = (user) => {
+    // Make sure input is not empty string
+    return user.name && user.job;
+}
+const addUser = (user) => {
+    users['users_list'].push(user);
+    return user;
+}
+
+app.post('/users', (req, res) => {
+    const userToAdd = req.body;
+    addUser(userToAdd);
+    res.send();
+});
+
+const findUserIndexById = (id) =>
+    users['users_list']
+        .findIndex( (user) => user['id'] === id);
+
+app.delete('/users/:id', (req, res) => {
+    const id = req.params['id'];
+    let index = findUserIndexById(id)
+    if (index === -1) {
+        res.status(404).send('Resource not found.');
+    } else { 
+        users['users_list'].splice(index, 1);
+        res.send();
+    }
+});
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });    
