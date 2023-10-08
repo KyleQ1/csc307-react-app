@@ -94,7 +94,7 @@ app.post('/users', (req, res) => {
     userToAdd.id = id;
 
     addUser(userToAdd);
-    res.status(201).send(); 
+    res.status(201).send(userToAdd); 
 });
 
 const deleteUserByID = (id) =>

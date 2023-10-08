@@ -34,8 +34,8 @@ import Form from './Form';
     }
     function updateList(person) {
       postUser(person)
-      .then((res) => res.status === 200 ? res.json() : Promise.reject(res))
-      .then(() => setCharacters([...characters, person]))
+      .then((res) => res.status === 201 ? res.json() : Promise.reject(res))
+      .then((json) => setCharacters([...characters, json]))
       .catch((error) => {
         console.log(error);
       })
