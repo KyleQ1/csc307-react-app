@@ -90,7 +90,7 @@ const addUser = (user) => {
 
 app.post('/users', (req, res) => {
     const userToAdd = req.body;
-    const id = Math.random().toString(36).split('.')[1];
+    const id = Math.random().toString(36).split('.')[1].substring(5);
     userToAdd.id = id;
 
     addUser(userToAdd);
