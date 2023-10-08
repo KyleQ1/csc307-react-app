@@ -15,12 +15,25 @@ import Form from './Form';
         .then((json) => setCharacters(json["users_list"]))
         .catch((error) => { console.log(error); });
     }, [] );
+
+    function deleteUser(id) {
+      const promise = fetch("http://localhost:8000/users/" + id, {
+        method: "DELETE"
+      });
+      return promise;
+    }
     function removeOneCharacter(index) {
         const updated = characters.filter((characters, i) => {
             return i !== index
         });
-        setCharacters(updated);
+        deleteUser(characters[index].id)
+          .then((res) => { if (res.status !== 204) { Promise.reject(res)}})
+          .then(() => setCharacters(updated))
+          .catch((error) => {
+            console.log(error);
+          })
     }
+
     function postUser(person) {
       const promise = fetch("Http://localhost:8000/users", {
         method: "POST",
