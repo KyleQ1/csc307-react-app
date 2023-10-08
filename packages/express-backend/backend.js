@@ -83,24 +83,20 @@ app.get('/users/:id', (req, res) => {
     }
 });
 
-const checkInput = (user) => {
-    // Make sure input is not empty string
-    return user.name && user.job;
-}
 const addUser = (user) => {
     users['users_list'].push(user);
     return user;
 }
 
 app.post('/users', (req, res) => {
-    const userToAdd = req.body;
+    const userToAdd = req.body;    
     addUser(userToAdd);
-    res.send();
+    res.status(201).send(); 
 });
 
-const findUserIndexById = (id) =>
+const deleteUserByID = (id) =>
     users['users_list']
-        .findIndex( (user) => user['id'] === id);
+        .splice(users['users_list'].findIndex( (user) => user['id'] === id), 1);
 
 app.delete('/users/:id', (req, res) => {
     const id = req.params['id'];
@@ -108,7 +104,6 @@ app.delete('/users/:id', (req, res) => {
     if (index === -1) {
         res.status(404).send('Resource not found.');
     } else { 
-        users['users_list'].splice(index, 1);
         res.send();
     }
 });
