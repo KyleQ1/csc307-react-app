@@ -89,7 +89,10 @@ const addUser = (user) => {
 }
 
 app.post('/users', (req, res) => {
-    const userToAdd = req.body;    
+    const userToAdd = req.body;
+    const id = Math.random().toString(36).split('.')[1];
+    userToAdd.id = id;
+
     addUser(userToAdd);
     res.status(201).send(); 
 });
@@ -100,7 +103,7 @@ const deleteUserByID = (id) =>
 
 app.delete('/users/:id', (req, res) => {
     const id = req.params['id'];
-    let index = findUserIndexById(id)
+    let index = deleteUserByID(id)
     if (index === -1) {
         res.status(404).send('Resource not found.');
     } else { 
