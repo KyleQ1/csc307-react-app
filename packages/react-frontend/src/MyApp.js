@@ -17,6 +17,7 @@ import Form from './Form';
     }, [] );
 
     function deleteUser(id) {
+      console.log(id);
       const promise = fetch("http://localhost:8000/users/" + id, {
         method: "DELETE"
       });

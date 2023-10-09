@@ -97,14 +97,20 @@ app.post('/users', (req, res) => {
     res.status(201).send(userToAdd); 
 });
 
-const deleteUserByID = (id) =>
-    users['users_list']
-        .splice(users['users_list'].findIndex( (user) => user['id'] === id), 1);
+const deleteUserByID = (id) => {
+    const index = users['users_list']
+        .findIndex( (user) => user['id'] === id);
+    if (index === -1) {
+        return false
+    } else {
+        users['users_list'].splice(index, 1);
+        return true
+    }
+}
 
 app.delete('/users/:id', (req, res) => {
     const id = req.params['id'];
-    let index = deleteUserByID(id)
-    if (index === -1) {
+    if (deleteUserByID(id) === false) {
         res.status(404).send('Resource not found.');
     } else { 
         res.status(204).send();
