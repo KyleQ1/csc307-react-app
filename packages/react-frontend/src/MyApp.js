@@ -16,9 +16,9 @@ import Form from './Form';
         .catch((error) => { console.log(error); });
     }, [] );
 
-    function deleteUser(id) {
-      console.log(id);
-      const promise = fetch("http://localhost:8000/users/" + id, {
+    function deleteUser(_id) {
+      console.log(_id);
+      const promise = fetch("http://localhost:8000/users/" + _id, {
         method: "DELETE"
       });
       return promise;
@@ -27,7 +27,7 @@ import Form from './Form';
         const updated = characters.filter((characters, i) => {
             return i !== index
         });
-        deleteUser(characters[index].id)
+        deleteUser(characters[index]._id)
           .then((res) => { if (res.status !== 204) { Promise.reject(res)}})
           .then(() => setCharacters(updated))
           .catch((error) => {
